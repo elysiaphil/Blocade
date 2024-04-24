@@ -9,12 +9,17 @@ Variables:
 
 Methods:
 
-purchaseNFT(address _address, uint256 _price) external:  
+//Note: much of this should be accomplishable with ethers.js which links a button click to a webpage
+
+purchaseNFT(address _address, uint256 _price) external:
+    // Activated when the purchaseNFT button is clicked
     // Prompt user to confirm the payment (link to confirm purchase figma/image)
     // Takes in address and subtracts the price from the account it is linked to
     // Adds the NFT to the user’s account
 
 filterNFTs(uint256 _rank) external:
+    //Clicking on the filterNFT button opens a drop down menu
+    //Checking boxes by the type of NFT (gold, silver, bronze) triggers method and translates it to a number
     // 0 is highest rank (gold), 1 is middle (silver), etc
 
 mintNFTs() external:
