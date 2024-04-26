@@ -1,8 +1,6 @@
 const express = require('express');
 const { ethers } = require('ethers');
 
-// Initialize Firebase Admin SDK
-
 const app = express();
 
 const cors = require('cors');
