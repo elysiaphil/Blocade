@@ -13,7 +13,7 @@ export const WalletProvider = ({ children }) => {
         try {
             const provider = new ethers.BrowserProvider(window.ethereum);
             await provider.send('eth_requestAccounts', []);
-            const signer = provider.getSigner();
+            const signer = await provider.getSigner();
             const address = await signer.getAddress();
             setWalletAddress(address);
             fetchBalance(address);
@@ -25,7 +25,7 @@ export const WalletProvider = ({ children }) => {
 
     const fetchBalance = async (address) => {
         // Assuming you have an endpoint to fetch the balance
-        const response = await fetch(`http://localhost:3001/balance/${address}`);
+        const response = await fetch(`http://localhost:3000/balance/${address}`);
         if (response.ok) {
             const data = await response.json();
             setBalance(data.balance);
