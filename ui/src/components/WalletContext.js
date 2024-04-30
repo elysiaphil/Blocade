@@ -5,9 +5,26 @@ const WalletContext = createContext();
 
 export const useWallet = () => useContext(WalletContext);
 
+// Helper function to load ABIs
+const loadABIs = async () => {
+    const context = require.context('../abis', false, /\.json$/);
+    return context.keys().reduce((acc, next) => {
+        const abi = context(next);
+        const contractName = next.replace('./', '').replace('.json', '');
+        acc[contractName] = abi;
+        return acc;
+    }, {});
+};
+
+
 export const WalletProvider = ({ children }) => {
     const [walletAddress, setWalletAddress] = useState(null);
     const [balance, setBalance] = useState(0);
+    const [contracts, setContracts] = useState({});
+
+    useEffect(() => {
+        loadABIs().then(setContracts);
+    }, []);
 
     const connectWallet = async () => {
         try {
@@ -41,8 +58,12 @@ export const WalletProvider = ({ children }) => {
     }, [walletAddress]);
 
     return (
-        <WalletContext.Provider value={{ walletAddress, balance, connectWallet }}>
+        <WalletContext.Provider value={{ walletAddress, balance, connectWallet, contracts }}>
             {children}
         </WalletContext.Provider>
     );
 };
+
+// Usage for a contract
+//const { contracts, walletAddress } = useWallet();
+//const myContract = new ethers.Contract(address, contracts['MyContract'], signer);
