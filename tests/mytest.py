@@ -1,3 +1,4 @@
+import token
 from web3 import Web3
 from web3.middleware import geth_poa_middleware
 from solcx import compile_files
@@ -34,7 +35,7 @@ def test_nft_transfer():
     balance_before = contract_instance.functions.balanceOf(web3.eth.defaultAccount).call()
 
     # Transfer NFT to another address
-    contract_instance.functions.transferNFT(web3.eth.defaultAccount, "0x6CAAC11FeA147b0E3D4D6c9722F12e5e273fa130", tokenId).transact()  # Replace "0x123..." with recipient's address
+    contract_instance.functions.transferNFT(web3.eth.defaultAccount, "0x6CAAC11FeA147b0E3D4D6c9722F12e5e273fa130", token).transact()  # Replace "0x123..." with recipient's address
 
     # Get balance after transfer
     balance_after = contract_instance.functions.balanceOf(web3.eth.defaultAccount).call()
