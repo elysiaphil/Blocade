@@ -1,0 +1,38 @@
+# Import the ERC721 interface
+from vyper.interfaces import ERC721
+
+# Define the contract
+contract MyNFT(ERC721):
+
+    # Constructor
+    def __init__():
+        ERC721.__init__()
+
+    # Mint function to create new NFTs
+    @external
+    def mint(to: address, tokenId: uint256):
+        self._mint(to, tokenId)
+
+    # Transfer function to transfer an NFT
+    @external
+    def transferNFT(from: address, to: address, tokenId: uint256):
+        assert self._isApprovedOrOwner(from, tokenId)
+        self._transfer(from, to, tokenId)
+
+    # Function to transfer NFT from website to user's wallet
+    @external
+    def transferNFTFromWebsite(from: address, to: address, tokenId: uint256, ipfsUrl: string):
+        # Check if sender is authorized to transfer from website
+        # This authorization mechanism can be implemented according to your website's logic
+        assert msg.sender == <website_address>
+
+        # Mint the NFT
+        self._mint(from, tokenId)
+
+        # Associate the NFT with the IPFS URL
+        self._setTokenURI(tokenId, ipfsUrl)
+
+        # Transfer the NFT to the recipient's wallet
+        self._transfer(from, to, tokenId)
+
+
